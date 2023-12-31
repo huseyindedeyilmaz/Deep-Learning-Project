@@ -1,47 +1,38 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bilgi Girişi Formu</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Titanic Survival Predictor</title>
 </head>
 <body>
-
-
-    <?php
-
-        include("model.php");
-    ?>
-    <form>
+    <h1>Titanic Survival Predictor</h1>
+    <form action="predict.php" method="post">
         <label for="pclass">Pclass:</label>
-        <input type="text" id="pclass" name="pclass" required>
+        <input type="text" name="pclass" required><br>
 
         <label for="sex">Sex:</label>
-        <select id="sex" name="sex" required>
+        <select name="sex" required>
             <option value="male">Male</option>
             <option value="female">Female</option>
-        </select>
+        </select><br>
 
         <label for="age">Age:</label>
-        <input type="text" id="age" name="age" required>
+        <input type="text" name="age" required><br>
 
         <label for="sibsp">SibSp:</label>
-        <input type="text" id="sibsp" name="sibsp" required>
+        <input type="text" name="sibsp" required><br>
 
         <label for="parch">Parch:</label>
-        <input type="text" id="parch" name="parch" required>
+        <input type="text" name="parch" required><br>
 
         <label for="fare">Fare:</label>
-        <input type="text" id="fare" name="fare" required>
+        <input type="text" name="fare" required><br>
 
         <label for="embarked">Embarked:</label>
-        <input type="text" id="embarked" name="embarked" required>
+        <input type="text" name="embarked" required><br>
 
-        <button type="submit">Send</button>
+        <input type="submit" value="Predict">
     </form>
-
-
-
 </body>
 </html>
