@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo '<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>';
     echo '<script>
             async function predict() {
-                const model = await tf.loadLayersModel("model.json");
+                const model = await tf.loadLayersModel("Model/model.h5");
                 const input = tf.tensor(' . $input_data . ');
                 const output = model.predict(input);
                 const prediction = output.dataSync()[0];
