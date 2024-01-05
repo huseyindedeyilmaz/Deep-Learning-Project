@@ -6,8 +6,15 @@
     <title>Titanic Survival Predictor</title>
 </head>
 <body>
-    <h1>Titanic Survival Predictor</h1>
-    <form action="predict.php" method="post">
+
+    <link rel="stylesheet" href="style.css">
+
+    <video id="videoBackground" autoplay muted loop>
+        <source src="../images&videos/titanic.mp4" type="video/mp4">
+    </video>
+
+
+    <form id="predictionForm">
         <label for="pclass">Pclass:</label>
         <input type="text" name="pclass" required><br>
 
@@ -32,9 +39,82 @@
         <label for="embarked">Embarked:</label>
         <input type="text" name="embarked" required><br>
 
-        <input type="submit" value="Predict">
+        <button type="button" onclick="prediction()">Predict</button>
     </form>
 
-    
+    <!-- Tahmin sonucunu görüntülemek için bir div ekleyin -->
+    <div id="predictionResult"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script>
+        // Sayfa yüklendiğinde çalışacak işlemler
+        document.addEventListener('DOMContentLoaded', function() {
+            // TensorFlow.js modelini yükle
+            loadModel();
+        });
+
+        // Modeli yükleme fonksiyonu
+        async function loadModel() {
+            window.model = await tf.loadLayersModel("../Model/model.json");
+        }
+
+        // Tahmin fonksiyonu
+        function prediction() {
+            // TensorFlow.js modeli var mı kontrol et
+            if (!window.model) {
+                alert("Model yüklenemedi. Lütfen tekrar deneyin.");
+                return;
+            }
+
+            // Giriş verilerini al
+            const pclass = parseInt(document.querySelector('[name="pclass"]').value);
+            const sex = document.querySelector('[name="sex"]').value;
+            const age = parseInt(document.querySelector('[name="age"]').value);
+            const sibsp = parseInt(document.querySelector('[name="sibsp"]').value);
+            const parch = parseInt(document.querySelector('[name="parch"]').value);
+            const fare = parseFloat(document.querySelector('[name="fare"]').value);
+            const embarked = document.querySelector('[name="embarked"]').value;
+            
+            // Giriş verilerini TensorFlow.js için hazırla
+            const sexValue = (sex === 'male') ? 0 : 1;
+            const embarkedValue = {'C': 0, 'Q': 1, 'S': 2}[embarked];
+            if (embarkedValue === undefined) {
+                alert("Geçersiz 'embarked' değeri. Lütfen 'C', 'Q' veya 'S' kullanın.");
+                return;
+            }
+          
+            // Giriş verilerini tensor formatına çevir
+            const input = tf.tensor3d([pclass, sexValue, age, sibsp, parch, fare, embarkedValue], [1, 7, 1]);
+            console.log(input)
+            // Scaler bilgilerini yükle
+            fetch("../Model/scaler_info.json")
+                .then(response => response.json())
+                .then(scalerInfo => {
+                    const dataScaler = {
+                        mean: tf.tensor(scalerInfo.mean).reshape([1, 7, 1]),
+                        scale: tf.tensor(scalerInfo.scale).reshape([1, 7, 1]),
+                    };
+
+                    // Giriş verilerini ölçekle
+                    const scaledInput = input.sub(dataScaler.mean).div(dataScaler.scale);
+
+                    // Tahmin yap
+                    const output = window.model.predict(scaledInput);
+                    const prediction = Array.from(output.dataSync())[0];
+
+                    // Tahmini bir div içinde görüntüle
+                    const predictionResultDiv = document.getElementById('predictionResult');
+                    
+                    const threshold = 0.5
+
+                    predictionResultDiv.innerHTML = (prediction > threshold) ? "She/He was survived" : "She/He wasn't survived"
+                })
+                .catch(error => {
+                    console.error("Scaler bilgileri yüklenirken hata oluştu:", error);
+                    alert("Bir hata oluştu. Lütfen tekrar deneyin.");
+                });
+        }
+    </script>
+
 </body>
 </html>
