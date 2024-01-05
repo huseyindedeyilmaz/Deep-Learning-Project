@@ -9,8 +9,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fare = $_POST["fare"];
     $embarked = $_POST["embarked"];
 
+    // Convert categorical data to numerical values
+    $sexValue = ($sex == 'male') ? 0 : 1;
+    $embarkedValue = ['C' => 0, 'Q' => 1, 'S' => 2][$embarked];
+
+    // Check if embarked is valid
+    if ($embarkedValue === null) {
+        echo "Invalid 'embarked' value. Please use 'C', 'Q', or 'S'.";
+        exit();
+    }
+
     // Prepare data for TensorFlow.js
-    $input_data = "[$pclass, '$sex', $age, $sibsp, $parch, $fare, '$embarked']";
+    $input_data = "[$pclass, $sexValue, $age, $sibsp, $parch, $fare, $embarkedValue]";
+    // Display the input data (optional)
+    echo "<p>Input Data: $input_data</p>";
 ?>
 
 <!-- Your existing HTML code -->
@@ -31,17 +43,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script>
         document.getElementById('predictionForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            predict();
+            prediction();
         });
 
-        async function predict() {
+        async function prediction() {
             const model = await tf.loadLayersModel("../Model/model.json");
-            const input = tf.tensor(<?php echo $input_data; ?>);
-            const output = model.predict(input);
-            const prediction = output.dataSync()[0];
 
-            // Update HTML element with the prediction result
-            document.getElementById("predictionResult").innerText = "Survival Probability: " + prediction;
+            
+            
+            // Create an array of passenger data
+            // Create an array of passenger data for example 
+            let passenger = [[1], [1], [38], [1], [0], [71.2833], [0]];  // Assuming Pclass=1 for simplicity
+
+            // Convert the array to a tensor and reshape it to [7, 1]
+            let input = tf.tensor(passenger);
+            // Reshape the tensor to 3D
+            input = input.reshape([1, 7, 1]);
+            
+            //input = input.reshape([1, 7,1]);
+            // const inputDataString = "<?php echo $input_data; ?>";
+            // const inputDataArray = JSON.parse(inputDataString).map(Number);
+            //const input = tf.tensor3d([inputDataArray], [1, 1, 7]);
+            //console.log(input);
+
+             // Load the scaler information
+            const scalerInfoResponse = await fetch("../Model/scaler_info.json");
+            const scalerInfo = await scalerInfoResponse.json();
+            // Create a scaler using the information
+            const dataScaler = {
+                mean: tf.tensor(scalerInfo.mean),
+                scale: tf.tensor(scalerInfo.scale),
+            };
+            //scale the passenger data using the same scaler used during training
+            const scaledInput = input.sub(dataScaler.mean).div(dataScaler.scale);
+            // Scale the passenger data
+            // Make a prediction
+            const output = model.predict(scaledInput);
+            const prediction = Array.from(output.dataSync())[0];
+
+            // Display the prediction in a popup
+            alert("Survival Probability: " + prediction);
         }
     </script>
 </body>
