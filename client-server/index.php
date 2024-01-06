@@ -8,6 +8,28 @@
 <body>
 
     <link rel="stylesheet" href="style.css">
+      
+    
+    <audio id="song" controls>
+        <source src="../images&videos/titanic_song.mp3" type="audio/mp3">
+        Tarayıcınız ses etiketini desteklemiyor.
+    </audio>
+
+
+
+    <script>
+        var audioElement = document.getElementById("song");
+
+        function toggleSound() {
+            if (audioElement.paused) {
+                audioElement.play();
+            } else {
+                audioElement.pause();
+            }
+        }
+    </script>
+
+
 
     <video id="videoBackground" autoplay muted loop>
         <source src="../images&videos/titanic.mp4" type="video/mp4">
@@ -15,6 +37,7 @@
 
 
     <form id="predictionForm">
+        <label for="Title">Titanic Survival</label>
         <label for="pclass">Pclass:</label>
         <input type="text" name="pclass" required><br>
 
@@ -40,6 +63,8 @@
         <input type="text" name="embarked" required><br>
 
         <button type="button" onclick="prediction()">Predict</button>
+        <button type="button"onclick="toggleSound()" id="song_button">Song</button>
+
     </form>
 
     <!-- Tahmin sonucunu görüntülemek için bir div ekleyin -->
@@ -49,7 +74,6 @@
     <script>
         // Sayfa yüklendiğinde çalışacak işlemler
         document.addEventListener('DOMContentLoaded', function() {
-            // TensorFlow.js modelini yükle
             loadModel();
         });
 

@@ -38,7 +38,7 @@ form {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
     padding: 20px;
-    width: 750px; /* Formun genişliğini ekranın genişliği kadar yapar */
+    width: 25%; /* Formun genişliğini ekranın genişliği kadar yapar */
     display: flex;
     flex-direction: column;
     align-items: center; 
@@ -48,14 +48,26 @@ form {
 }
 
 
-
+#song {
+    font-size: 1px; /* Butonun yazı boyutunu ayarla */
+    padding: 10px ; /* Butonun iç boşluğunu ayarla */
+    display: none;
+}
 
 label {
     display: flex;
     margin-bottom: 8px;
     font-weight: bolder;
     color: rgb(255, 255, 255);
+    font-family: cursive;
     
+}
+
+label[for="Title"] {
+    font-size: 40px; /* Font büyüklüğünü istediğiniz değere ayarlayabilirsiniz */
+    font-family: cursive;
+    margin-bottom: 20px;
+
 }
 
 
@@ -66,7 +78,22 @@ input, select {
     box-sizing: border-box;
 }
 
+#song_button {
+    margin: 0 auto; /* Butonu yatayda ortalar */
+    background-color: #fff;
+    color: #572b02;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 20%;
+    height: auto;
+
+}
+
+
 button {
+    display: block;
     margin: 0 auto; /* Butonu yatayda ortalar */
     background-color: #572b02;
     color: #fff;
