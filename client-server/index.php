@@ -16,8 +16,11 @@
     </audio>
 
 
+    <?php
+// PHP kodları buraya gelecek
 
-    <script>
+// Örnek JavaScript kodunu PHP içinde oluşturma
+    echo '<script>
         var audioElement = document.getElementById("song");
 
         function toggleSound() {
@@ -27,9 +30,11 @@
                 audioElement.pause();
             }
         }
-    </script>
+      </script>';
+?>
 
-
+        <h1 id = "title">Titanic Survival</h1>
+        <h1 id="output" display="none"></h1>
 
     <video id="videoBackground" autoplay muted loop>
         <source src="../images&videos/titanic.mp4" type="video/mp4">
@@ -37,7 +42,7 @@
 
 
     <form id="predictionForm">
-        <label for="Title">Titanic Survival</label>
+        <label for="passenger">Passenger</label>
         <label for="pclass">Pclass:</label>
         <input type="text" name="pclass" required><br>
 
@@ -63,7 +68,7 @@
         <input type="text" name="embarked" required><br>
 
         <button type="button" onclick="prediction()">Predict</button>
-        <button type="button"onclick="toggleSound()" id="song_button">Song</button>
+        <button type="button"onclick="toggleSound()" id="song_button">Play/Mute</button>
 
     </form>
 
@@ -131,7 +136,25 @@
                     
                     const threshold = 0.5
 
-                    predictionResultDiv.innerHTML = (prediction > threshold) ? "She/He was survived" : "She/He wasn't survived"
+                    if(prediction >= threshold){
+                        const Title = document.getElementById("title");
+                        Title.style.display = "none"
+
+                        const output = document.getElementById("output");
+                        output.innerHTML = "She/He was Survived";
+                        output.style.display="block"
+              
+                    }
+                    else{
+                        const Title = document.getElementById("title");
+                        Title.style.display = "none"
+
+                        const output = document.getElementById("output");
+                        output.innerHTML = "She/He wasn't survived";
+                        output.style.display="block"
+                        
+                    }
+                    // predictionResultDiv.innerHTML = (prediction > threshold) ? "She/He was survived" : "She/He wasn't survived"
                 })
                 .catch(error => {
                     console.error("Scaler bilgileri yüklenirken hata oluştu:", error);
