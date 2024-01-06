@@ -23,7 +23,8 @@
                     // Display prediction result to predictionResult div as "Survived" or "Not Survived if predicted value is more than 0.5"
                     // $("#predictionResult").html(predicted > 0.5 ? "<h1 class='text-success'>This Passenger was Survived from Titanic incident</h1>" 
                     // : "<h1 class='text-danger'>This Passenger was not Survived from Titanic incident</h1>");
-                    $("#predictionResult").html(predicted > 0.5 ? '<div class="alert alert-dismissible alert-success" style="width:100%;"><button type="button" class="btn-close" data-bs-dismiss="alert"></button><h3><strong>This Passenger</strong> was <strong>Survived</strong> from Titanic incident.</h3></div>' 
+                    $threshold = 0.453
+                    $("#predictionResult").html(predicted > $threshold ? '<div class="alert alert-dismissible alert-success" style="width:100%;"><button type="button" class="btn-close" data-bs-dismiss="alert"></button><h3><strong>This Passenger</strong> was <strong>Survived</strong> from Titanic incident.</h3></div>' 
                     : '<div class="alert alert-dismissible alert-danger" style="width:100%;"><button type="button" class="btn-close" data-bs-dismiss="alert"></button><h3><strong>This Passenger</strong> was <strong>not Survived</strong> from Titanic incident.</h3></div>');
                     
                 }
