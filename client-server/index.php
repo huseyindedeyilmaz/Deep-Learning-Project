@@ -99,8 +99,13 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class=" form-group">
-                                            <label class="form-label mt-4">Pclass</label>
-                                            <input type="Number" class="form-control form-text" name="pclass" required>
+                                            <label class="form-label mt-4">Ticket Class</label>
+                                            <select name="pclass" class="form-control form-text" required>
+                                                <option value="">Select</option>
+                                                <option value="1">1st Class</option>
+                                                <option value="2">2nd Class</option>
+                                                <option value="3">3rd Class</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -124,19 +129,21 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class=" form-group">
-                                            <label class="form-label mt-4">SibSp</label>
+                                            <label class="form-label mt-4">Number of Sibling/Spouse</label>
                                             <input type="number" class="form-control form-text" name="sibsp" required>
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <div class=" form-group">
-                                            <label class="form-label mt-4">Parch</label>
+                                        <div class=" form-group">    
+                                            <label class="form-label mt-4">Number of Parents/Child</label>
                                             <input type="number" class="form-control form-text" name="parch" required>
                                         </div>
                                     </div>
+                                    
                                     <div class="col">
+                                    <br />
                                         <div class=" form-group">
-                                            <label class="form-label mt-4">Fare</label>
+                                            <label class="form-label mt-4">Passenger fare</label>
                                             <input type="number" class="form-control form-text" name="fare" required>
                                         </div>
                                     </div>
@@ -144,12 +151,12 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class=" form-group">
-                                            <label class="form-label mt-4">Embarked(C,Q,S)</label>
+                                            <label class="form-label mt-4">Port of Embarkation</label>
                                             <select name="embarked" class="form-control form-text" required>
-                                                <option value="">Select Embarked</option>
-                                                <option value="C">C</option>
-                                                <option value="Q">Q</option>
-                                                <option value="S">S</option>
+                                                <option value="">Select</option>
+                                                <option value="C">Cherbourg</option>
+                                                <option value="Q">Queenstown</option>
+                                                <option value="S">Southampton</option>
                                             </select>
                                         </div>
                                     </div>

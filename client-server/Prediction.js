@@ -1,11 +1,15 @@
 async function prediction(input_data) {
+  // Load the model
   const model = await tf.loadLayersModel("../Model/model.json");
+  // Load the input data
   const inputDataArray = JSON.parse(input_data).map(Number);
   console.log(inputDataArray);
+  // Convert the input data to a tensor
   const input = tf.tensor3d(inputDataArray, [1, 7, 1]);
 
   // Load the scaler information
   const scalerInfoResponse = await fetch("../Model/scaler_info.json");
+  // Convert the scaler information to a tensor
   const scalerInfo = await scalerInfoResponse.json();
   // Create a scaler using the information
   const dataScaler = {
@@ -18,8 +22,8 @@ async function prediction(input_data) {
   console.log(scaledInput);
   // Make a prediction
   const output = model.predict(scaledInput);
+  // Convert the output to an array
   const prediction = Array.from(output.dataSync())[0];
+  // Return the prediction
   return prediction;
-  // Display the prediction in a popup
-  //   alert("Survival Rate: " + prediction * 100 + "%");
 }
