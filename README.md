@@ -10,12 +10,12 @@ Deep Learning Final Project To Predict The Surviving Rate Of Titanic Passengers 
 </div>
 
 ## UI Screenshots
-User Interface of Diabetes Prediction Web Application </br>
-!![Screenshot](Screenshort/Main.jpg)
+User Interface of Titanic Survival Prediction Web Application </br>
+![Screenshot](Screenshort/Main.jpg)
 
-!![Screenshot](Screenshort/Survived.jpg)
+![Screenshot](Screenshort/Survived.jpg)
 
-!![Screenshot](Screenshort/NotSurvived.jpg)
+![Screenshot](Screenshort/NotSurvived.jpg)
 
 ## Contributors
 * [Hakam Chedo](https://github.com/H4K4M)
