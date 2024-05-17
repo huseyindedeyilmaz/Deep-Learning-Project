@@ -1,2 +1,2 @@
-# Deep-Learning-Project
+# Titanic Survival Prediction
 Deep Learning Final Project
